@@ -6,6 +6,7 @@ import markdoc from "@astrojs/markdoc";
 // https://astro.build/config
 export default defineConfig({
   site: "https://sdhernan.github.io",
+  base: "/wiki-procesar/",
   integrations: [
     starlight({
       title: "Wiki Docs",
@@ -24,10 +25,10 @@ export default defineConfig({
           label: "Comienza a explorar",
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: "Introducción", slug: "/guias/introduccion" },
+            { label: "Introducción", slug: "guias/introduccion" },
             {
               label: "Documentación ecológica",
-              slug: "/guias/impacto-ecologico",
+              slug: "guias/impacto-ecologico",
             },
           ],
         },
