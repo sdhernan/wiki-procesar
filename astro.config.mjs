@@ -5,8 +5,8 @@ import markdoc from "@astrojs/markdoc";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sdhernan.github.io',
-  base: '/wiki-procesar',
+  site: "https://sdhernan.github.io",
+  base: "/wiki-procesar",
   integrations: [
     starlight({
       title: "Wiki Docs",
@@ -36,18 +36,20 @@ export default defineConfig({
           label: "Documentos",
           items: [
             // Each item here is one entry in the navigation menu.
-           
           ],
         },
         {
-            label: "Servicios REST",
-            items: [
-              // Each item here is one entry in the navigation menu.
-             
-            ],
-          },
+          label: "Servicios REST",
+          items: [
+            // Each item here is one entry in the navigation menu.
+          ],
+        },
         {
           label: "Referencias",
+          autogenerate: { directory: "reference" },
+        },
+        {
+          label: "Ayuda",
           autogenerate: { directory: "reference" },
         },
       ],
