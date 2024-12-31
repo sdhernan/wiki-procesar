@@ -1,0 +1,66 @@
+---
+title: Verificar Correo Trabajador
+description: Servicio para consultar si esta verificado un correo
+---
+
+## Descripción
+Servicio REST que valida si un correo electrónico está verificado, donde el estatus de verificación debe ser igual a 1.
+
+### ⚡Endpoint
+```
+GET {baseUrl}/comunesPulssar/correo/validarVerificacion
+```
+
+### 🔖 Parámetros
+| Parámetro  | Tipo - | Requerido | Descripción                               |
+|------------|--------|:-----------:|-------------------------------------------|
+| idProcesar | Long   | Sí        | Identificador único del proceso           |
+| correo     | String | Sí        | Dirección de correo electrónico a validar |
+
+## 📝 Responses
+
+### 🌟 200 - Correo Encontrado
+```json
+{
+    "existeError": false,
+    "descripcion": "Operación Correcta",
+    "consulta": {
+        "correo": "LUJAN_JZ@HOTMAIL.COM",
+        "idProcesar": "393866235685"
+    },
+    "correo": {
+        "idProcesar": 393866235685,
+        "correoElectronico": "LUJAN_JZ@HOTMAIL.COM",
+        "estatusVerificacion": 1,
+        "fechaVerificacion": 1731689464000,
+        "fechaControl": 1731689464000,
+        "usuarioModificador": "SDHERNAN"
+    }
+}
+```
+
+
+### 😞 200 - Correo No Encontrado
+
+```json showLineNumbers
+{
+    "existeError": false,
+    "descripcion": "Operación Correcta",
+    "consulta": {
+        "correo": "LUJAN_JZ@HOTMAI.COM",
+        "idProcesar": "393866235685"
+    },
+    "correo": null
+}
+```
+
+### 📑 Códigos de Error
+| Código | Descripción |
+|--------|-------------|
+| 💢 400 | Bad Request - Parámetros inválidos o faltantes |
+| 💀 500 | Internal Server Error - Error interno del servidor |
+
+### 👀 Ejemplo
+```http showLineNumbers
+GET {baseUrl}/comunesPulssar/correo/validarVerificacion?idProcesar=393866235685&correo=LUJAN_JZ@HOTMAIL.COM
+```
