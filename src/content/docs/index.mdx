@@ -1,0 +1,32 @@
+---
+title: Bienvenido a Procesar
+description: Empieza a leer la documentación de Procesar.
+template: splash
+hero:
+  tagline: ¡Comienza a explorar y descubre todo lo que tenemos!
+  image:
+    file: ../../assets/houston.webp
+  actions:
+    - text: Empezar
+      link: /guias/introduccion/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Siguientes pasos
+
+<CardGrid stagger>
+	<Card title="Actualiza Contenido" icon="pencil">
+		Edit `src/content/docs/index.mdx` to see this page change.
+	</Card>
+	<Card title="Agrega nuevo contenido" icon="add-document">
+		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	</Card>
+	<Card title="Configura tu sitio" icon="setting">
+		Edit your `sidebar` and other config in `astro.config.mjs`.
+	</Card>
+	<Card title="Lee la documentación" icon="open-book">
+		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	</Card>
+</CardGrid>

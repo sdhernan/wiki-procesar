@@ -1,0 +1,83 @@
+---
+title: Documentación ecológica
+description: A guide in my new Starlight docs site.
+---
+
+Las estimaciones del impacto climático de la industria web oscilan entre el 2% y el 4% de las emisiones globales de carbono, equivalente aproximadamente a las emisiones de la industria de la aviación. Hay muchos factores complejos en el cálculo del impacto ecológico de un sitio web, pero esta guía incluye algunos consejos para reducir la huella ambiental de tu sitio de documentación.
+
+La buena noticia es que elegir Starlight es un excelente comienzo. Según el Website Carbon Calculator, este sitio es más limpio que el 99% de las páginas web analizadas, produciendo 0.01g de CO₂ por visita a la página.
+
+### Peso de la Página
+
+Cuanto más datos transfiera una página web, más recursos energéticos requerirá. En abril de 2023, la mediana de una página web requería que un usuario descargara más de 2.000 KB, según los datos del HTTP Archive.
+
+Starlight construye páginas que son lo más livianas posible. Por ejemplo, en una primera visita, un usuario descargará menos de 50 KB de datos comprimidos, lo que representa solo el 2.5% de la mediana del archivo HTTP. Con una buena estrategia de almacenamiento en caché, las navegaciones posteriores pueden descargar tan solo 10 KB.
+
+### Imágenes
+Si bien Starlight proporciona una buena base, las imágenes que agregas a tus páginas de documentación pueden aumentar rápidamente el peso de la página. Starlight utiliza el soporte de assets optimizados de Astro para optimizar las imágenes locales en tus archivos Markdown y MDX.
+
+### Componentes UI
+Los componentes construidos con frameworks UI como React o Vue pueden añadir fácilmente grandes cantidades de JavaScript a una página. Sin embargo, debido a que Starlight está construido sobre Astro, los componentes como estos no cargan ningún JavaScript del lado del cliente de forma predeterminada, gracias a las islas de Astro.
+
+## Caché
+
+La caché se utiliza para controlar cuánto tiempo un navegador almacena y reutiliza los datos que ha estado descargando. Una buena estrategia de caché asegura que un usuario obtenga nuevo contenido tan pronto como sea posible cuando está cambiando, pero también evita descargar innecesariamente el mismo contenido una y otra vez cuando no ha estado cambiando.
+
+La forma más común de configurar la caché es mediante la cabecera HTTP Cache-Control. Al utilizar Starlight, puedes establecer un tiempo de caché prolongado para todo lo que se encuentra en el directorio /_astro/. Este directorio contiene CSS, JavaScript y otros activos empaquetados que se pueden almacenar en caché de forma segura para siempre, reduciendo las descargas innecesarias.
+
+{% code
+    code="Cache-Control: public, max-age=604800, immutable"
+    lang="html"
+/%}
+
+{% code
+    code="/_astro/* \n Cache-Control: public Cache-Control: max-age=604800 Cache-Control: immutable"
+    lang="html"
+/%}
+
+### Consumo de energía
+
+La forma en que se construye una página web puede afectar la cantidad de energía necesaria para que funcione en el dispositivo de un usuario. Al utilizar un JavaScript mínimo, Starlight reduce la cantidad de potencia de procesamiento que necesita el teléfono, la tableta o la computadora de un usuario para cargar y renderizar las páginas.
+
+Ten en cuenta que al agregar funciones como scripts de seguimiento de análisis o contenido pesado en JavaScript como incrustaciones de video, esto puede aumentar el consumo de energía de la página. Si necesitas analíticas, considera elegir una opción liviana como Cabin, Fathom o Plausible. Las incrustaciones de videos de servicios como YouTube y Vimeo se pueden mejorar al cargar el video cuando haya interacción del usuario. Paquetes como astro-embed pueden ser útiles para servicios comunes.
+
+{% aside type="tip" title="¿Sabías esto?" %}
+El análisis y compilación de JavaScript es una de las tareas más costosas que los navegadores deben realizar. En comparación con el renderizado de una imagen JPEG del mismo tamaño, el procesamiento de JavaScript puede llevar más de 30 veces más tiempo.
+{% /aside %}
+
+### Hospedaje
+
+El lugar donde se hospeda una página web puede tener un gran impacto en la ecología de tu sitio de documentación. Los centros de datos y las granjas de servidores pueden tener un alto consumo de electricidad y un uso intensivo del agua.
+
+Elegir un proveedor de alojamiento que utilice energía renovable significa tener emisiones de carbono más bajas para tu sitio. El Directorio de la Web Ecológica es una herramienta que puede ayudarte a encontrar empresas de alojamiento.
+
+### Comparativa de Frameworks
+
+¿Curioso por saber cómo se comparan otros frameworks de documentación? Estas pruebas con el Calculadora de Carbono de Sitios Web comparan páginas similares construidas con diferentes herramientas.
+
+| Framework   | CO₂ por visita | Calificación |
+|------------|----------------|---------------|
+| Starlight  | 0.01g          | A+            |
+| VitePress  | 0.07g          | A+            |
+| Docus      | 0.09g          | A+            |
+| Nextra     | 0.11g          | A             |
+| Docusaurus | 0.21g          | B             |
+| GitBook    | 0.43g          | C             |
+| Mintlify   | 1.22g          | F             |
+
+Datos recopilados el 22 de Julio de 2024. Haz clic en un enlace para ver cifras actualizadas.
+
+## Recursos Adicionales
+
+### Herramientas
+- Calculadora de Carbono de Sitios Web
+- GreenFrame
+- Ecograder
+- Control de Carbono WebPageTest
+- Ecoping
+
+### Lecturas Recomendadas
+- "Construyendo una web más ecológica" - Michelle Barker
+- "Estrategias de desarrollo web sostenible" - Michelle Barker
+- "Una web sostenible para todos" - Tom Greenwood
+- "Impacto del contenido web en el consumo energético" - Benjamin Poulain y Simon Fraser
