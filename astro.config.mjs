@@ -24,10 +24,10 @@ export default defineConfig({
           label: "Comienza a explorar",
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: "Introducción", slug: "guias/introduccion" },
+            { label: "Introducción", slug: "/guias/introduccion" },
             {
               label: "Documentación ecológica",
-              slug: "guias/impacto-ecologico",
+              slug: "/guias/impacto-ecologico",
             },
           ],
         },
