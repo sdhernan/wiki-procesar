@@ -11,6 +11,9 @@ export default defineConfig({
     starlight({
       title: "Wiki Docs",
       defaultLocale: "root",
+      editLink: {
+        baseUrl: 'https://github.com/sdhernan/wiki-procesar/edit/main/',
+      },
       locales: {
         root: {
           label: "Español",
