@@ -43,6 +43,7 @@ export default defineConfig({
         items: [
           // Each item here is one entry in the navigation menu
           { label: "Verificar Correo Trabajador", slug: "api/verificar-correo" },
+          { label: "Verificar Teléfono Trabajador", slug: "api/verificar-telefono" },
         ],
       },
       {

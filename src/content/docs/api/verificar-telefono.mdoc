@@ -1,0 +1,177 @@
+---
+title: Verificar Teléfono Trabajador
+description: Servicio para consultar si está verificado un número telefónico
+---
+
+### 🔄 Versión 1
+
+## 📋 Descripción
+Servicio REST que valida si un número telefónico está verificado, donde el estatus de verificación debe 
+ser igual a **1** si es **0** no está verificado.
+
+## 📊 UML del Servicio
+
+![Diagrama de secuencia para verificar teléfono](./images/mermaid-diagram-verificar-telefono.png)
+
+## 🗃️ Información de Base de Datos
+
+```sql
+Motor: Oracle
+Base de Datos: DDBOSOPOSE
+Esquema: PRONCSERA
+```
+
+### 📑 Entidades Relacionadas
+| Entidad | Descripción |
+|---------|-------------|
+| 📱 NSAR_TR_TELEFONO | Almacena la información de números telefónicos |
+
+### ⚡Estructura de la URL
+```http
+GET {baseUrl}/comunesPulssar/trabajador/telefono/validarVerificacion
+```
+
+### 🔐 Autenticación
+```http
+N/A
+```
+
+### 🌐 Endpoint Format
+```http
+RPC
+```
+
+### 🔖 Parámetros
+
+#### Tabla 1: Parámetros de Entrada
+| Parámetro  | Tipo   | Requerido | Descripción                               |
+|------------|--------|:---------:|-------------------------------------------|
+| idProcesar | Long   | Sí        | Identificador único del proceso           |
+| telefono   | String | Sí        | Número telefónico a validar              |
+
+## 📋 Responses
+
+### 🌟 200 - Teléfono Encontrado
+```json
+{
+    "existeError": false,
+    "descripcion": "Operación Correcta",
+    "consulta": {
+        "idProcesar": "2648",
+        "telefono": "4654654564"
+    },
+    "telefono": {
+        "idTelefono": 43,
+        "tipoTelefono": {
+            "idTipoTelefono": 2,
+            "claveTipoTelefono": "02",
+            "descTipoTelefono": "CASA",
+            "fechaControl": 1401339600000,
+            "usuarioModificador": "MIGRACION"
+        },
+        "idProcesar": 2648,
+        "numeroTelefono": "4654654564",
+        "estatus": 0,
+        "usuarioModificador": "sarApp",
+        "fechaControl": 1732045101000,
+        "extensionTelefonica": null,
+        "estatusVerificacion": 1,
+        "fechaVerificacion": 1732045100000
+    }
+}
+```
+
+#### Descripción
+La respuesta incluye información detallada sobre el estado de verificación del número telefónico consultado. Contiene los parámetros originales de la consulta y, cuando el teléfono es encontrado, proporciona datos completos sobre su estado de verificación, tipo de teléfono, fechas de control y usuario que realizó la última modificación.
+
+#### Tabla 2: Estructura de Respuesta Exitosa
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| existeError | Boolean | Indica si hubo un error en la operación |
+| descripcion | String | Mensaje descriptivo del resultado de la operación |
+| consulta | Object | Objeto que contiene los parámetros de la consulta realizada |
+| consulta.idProcesar | String | Identificador del proceso consultado |
+| consulta.telefono | String | Número telefónico consultado |
+| telefono | Object | Objeto con la información del teléfono encontrado |
+| telefono.idTelefono | Integer | Identificador único del teléfono |
+| telefono.tipoTelefono | Object | Información sobre el tipo de teléfono |
+| telefono.idProcesar | Long | Identificador único del proceso |
+| telefono.numeroTelefono | String | Número telefónico |
+| telefono.estatus | Integer | Estado del registro |
+| telefono.estatusVerificacion | Integer | Estado de verificación (1: verificado, 0: no verificado) |
+| telefono.fechaVerificacion | Long | Fecha de verificación del teléfono en formato timestamp |
+| telefono.fechaControl | Long | Fecha de control en formato timestamp |
+| telefono.usuarioModificador | String | Usuario que realizó la última modificación |
+| telefono.extensionTelefonica | String | Extensión telefónica (opcional) |
+
+### 😞 200 - Teléfono No Encontrado
+
+```json
+{
+    "existeError": false,
+    "descripcion": "Operación Correcta",
+    "consulta": {
+        "idProcesar": "2648",
+        "telefono": "465465456"
+    },
+    "telefono": null
+}
+```
+
+#### Descripción
+La respuesta indica que la operación se realizó correctamente pero no se encontró información del número telefónico consultado. Se incluyen los parámetros originales de la consulta y el campo telefono se devuelve como null para indicar que no existe registro del teléfono buscado.
+
+#### Tabla 3: Estructura de Respuesta Sin Resultados
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| existeError | Boolean | Indica si hubo un error en la operación |
+| descripcion | String | Mensaje descriptivo del resultado de la operación |
+| consulta | Object | Objeto que contiene los parámetros de la consulta realizada |
+| consulta.idProcesar | String | Identificador del proceso consultado |
+| consulta.telefono | String | Número telefónico consultado |
+| telefono | null | Valor nulo que indica que no se encontró información del teléfono |
+
+### 📑 Códigos de Error
+
+#### Descripción
+En caso de que ocurra un error durante la consulta, el servicio puede responder con los siguientes códigos HTTP. Cada código proporciona información específica sobre la naturaleza del error encontrado durante el procesamiento de la solicitud.
+
+#### Tabla 4: Códigos de Error HTTP
+| Código | Descripción |
+|--------|-------------|
+| 💢 400 | Bad Request - Parámetros inválidos o faltantes |
+| 💀 500 | Internal Server Error - Error interno del servidor |
+
+### 👀 Ejemplo
+
+#### Descripción
+A continuación se muestra un ejemplo de cómo realizar una petición al servicio. La URL incluye los parámetros requeridos: el identificador del proceso (`idProcesar`) y el número telefónico (`telefono`) que se desea verificar.
+
+```http
+GET {baseUrl}/comunesPulssar/trabajador/telefono/validarVerificacion?idProcesar=2648&telefono=4654654564
+```
+
+> **Nota**: Reemplaza `{baseUrl}` con la URL base correspondiente a tu ambiente de ejecución.
+
+---
+
+## 📅 Changelog
+
+### 🔄 Versión 1.0.0 (31/12/2024)
+- 🎉 **Initial**: Primera versión del servicio de verificación de teléfonos
+- 📚 **Docs**: Documentación completa de endpoints y respuestas
+- 🧪 **Test**: Implementación de pruebas unitarias
+- 🎨 **Style**: Formato estandarizado de respuestas JSON
+
+---
+> **Leyenda de Cambios**:
+> - ✨ Added: Nuevas características
+> - 🔧 Fixed: Corrección de errores
+> - 🧪 Test: Nuevas pruebas o correcciones
+> - 📚 Docs: Actualizaciones de documentación
+> - 🎨 Style: Cambios de formato/estilo
+> - 🚀 Performance: Mejoras de rendimiento
+> - 🔒 Security: Correcciones de seguridad
+> - 🎉 Initial: Versión inicial
+> - 🏗️ Build: Sistema de construcción
+> - 📦 Deps: Dependencias
