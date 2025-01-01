@@ -3,12 +3,12 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import markdoc from "@astrojs/markdoc";
 
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://sdhernan.github.io",
   base: "wiki-procesar/",
   integrations: [starlight({
+   
     title: "Wiki Docs",
     defaultLocale: "root",
     locales: {

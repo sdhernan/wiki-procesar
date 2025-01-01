@@ -3,21 +3,53 @@ title: Verificar Correo Trabajador
 description: Servicio para consultar si esta verificado un correo
 ---
 
-## Descripción
-Servicio REST que valida si un correo electrónico está verificado, donde el estatus de verificación debe ser igual a 1.
+### 🔄 Versión 1
 
-### ⚡Endpoint
+## 📋 Descripción
+Servicio REST que valida si un correo electrónico está verificado, donde el estatus de verificación debe 
+ser igual a **1** si es **0** no está verificado.
+
+## 📊 UML del Servicio
+
+![Diagrama de secuencia para verificar correo](./images/mermaid-diagram-verificar-correo.png)
+
+## 🗃️ Información de Base de Datos
+
+```sql
+Motor: Oracle
+Base de Datos: DDBOSOPOSE
+Esquema: PRONCSERA
 ```
+
+### 📑 Entidades Relacionadas
+| Entidad | Descripción |
+|---------|-------------|
+| 📧 NSAR_TR_PARTICIPANTE_VERIF_CORREO | Almacena la información de correos electrónicos |
+
+### ⚡Estructura de la URL
+```http
 GET {baseUrl}/comunesPulssar/correo/validarVerificacion
 ```
 
+### 🔐 Autenticación
+```http
+N/A
+```
+
+### 🌐 Endpoint Format
+```http
+RPC
+```
+
 ### 🔖 Parámetros
+
+#### Tabla 1: Parámetros de Entrada
 | Parámetro  | Tipo - | Requerido | Descripción                               |
 |------------|--------|:-----------:|-------------------------------------------|
 | idProcesar | Long   | Sí        | Identificador único del proceso           |
 | correo     | String | Sí        | Dirección de correo electrónico a validar |
 
-## 📝 Responses
+## 📋 Responses
 
 ### 🌟 200 - Correo Encontrado
 ```json
@@ -39,6 +71,24 @@ GET {baseUrl}/comunesPulssar/correo/validarVerificacion
 }
 ```
 
+#### Descripción
+La respuesta incluye información detallada sobre el estado de verificación del correo electrónico consultado. Contiene los parámetros originales de la consulta y, cuando el correo es encontrado, proporciona datos completos sobre su estado de verificación, fechas de control y usuario que realizó la última modificación.
+
+#### Tabla 2: Estructura de Respuesta Exitosa
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| existeError | Boolean | Indica si hubo un error en la operación |
+| descripcion | String | Mensaje descriptivo del resultado de la operación |
+| consulta | Object | Objeto que contiene los parámetros de la consulta realizada |
+| consulta.correo | String | Correo electrónico consultado |
+| consulta.idProcesar | String | Identificador del proceso consultado |
+| correo | Object | Objeto con la información del correo encontrado |
+| correo.idProcesar | Long | Identificador único del proceso |
+| correo.correoElectronico | String | Dirección de correo electrónico |
+| correo.estatusVerificacion | Integer | Estado de verificación (1: verificado, 0: no verificado) |
+| correo.fechaVerificacion | Long | Fecha de verificación del correo en formato timestamp |
+| correo.fechaControl | Long | Fecha de control en formato timestamp |
+| correo.usuarioModificador | String | Usuario que realizó la última modificación |
 
 ### 😞 200 - Correo No Encontrado
 
@@ -54,13 +104,76 @@ GET {baseUrl}/comunesPulssar/correo/validarVerificacion
 }
 ```
 
+#### Descripción
+La respuesta indica que la operación se realizó correctamente pero no se encontró información del correo electrónico consultado. Se incluyen los parámetros originales de la consulta y el campo correo se devuelve como null para indicar que no existe registro del correo buscado.
+
+#### Tabla 3: Estructura de Respuesta Sin Resultados
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| existeError | Boolean | Indica si hubo un error en la operación |
+| descripcion | String | Mensaje descriptivo del resultado de la operación |
+| consulta | Object | Objeto que contiene los parámetros de la consulta realizada |
+| consulta.correo | String | Correo electrónico consultado |
+| consulta.idProcesar | String | Identificador del proceso consultado |
+| correo | null | Valor nulo que indica que no se encontró información del correo |
+
 ### 📑 Códigos de Error
+
+#### Descripción
+En caso de que ocurra un error durante la consulta, el servicio puede responder con los siguientes códigos HTTP. Cada código proporciona información específica sobre la naturaleza del error encontrado durante el procesamiento de la solicitud.
+
+#### Tabla 4: Códigos de Error HTTP
 | Código | Descripción |
 |--------|-------------|
 | 💢 400 | Bad Request - Parámetros inválidos o faltantes |
 | 💀 500 | Internal Server Error - Error interno del servidor |
 
 ### 👀 Ejemplo
+
+#### Descripción
+A continuación se muestra un ejemplo de cómo realizar una petición al servicio. La URL incluye los parámetros requeridos: el identificador del proceso (`idProcesar`) y el correo electrónico (`correo`) que se desea verificar.
+
 ```http showLineNumbers
 GET {baseUrl}/comunesPulssar/correo/validarVerificacion?idProcesar=393866235685&correo=LUJAN_JZ@HOTMAIL.COM
 ```
+
+> **Nota**: Reemplaza `{baseUrl}` con la URL base correspondiente a tu ambiente de ejecución.
+
+---
+
+## 📅 Changelog
+
+### 🔄 Versión 1.3.0 (31/12/2023)
+- 🔄 Actualizado el nombre de la tabla de `TR_CORREO` a `NSAR_TR_PARTICIPANTE_VERIF_CORREO`
+- 🗑️ Eliminada la referencia a la tabla `TR_TELEFONO`
+- 📊 Agregado diagrama UML del servicio
+- 🖼️ Actualizado formato de documentación con imágenes PNG
+
+### 🔄 Versión 1.2.0 (31/12/2024)
+- ✨ **Added**: Implementación inicial del servicio de verificación de correos
+- 📚 **Docs**: Documentación completa de endpoints y respuestas
+- 🧪 **Test**: Pruebas unitarias para validación de correos
+- 🎨 **Style**: Formato estandarizado de respuestas JSON
+
+### 🔄 Versión 1.1.0 (30/12/2024)
+- 🔧 **Fixed**: Corrección en la validación de formato de correo
+- 🚀 **Performance**: Optimización en consultas a base de datos
+- 🔒 **Security**: Implementación de validaciones adicionales
+
+### 🔄 Versión 1.0.0 (29/12/2024)
+- 🎉 **Initial**: Primera versión del servicio
+- 🏗️ **Build**: Configuración inicial del proyecto
+- 📦 **Deps**: Dependencias base del proyecto
+
+---
+> **Leyenda de Cambios**:
+> - ✨ Added: Nuevas características
+> - 🔧 Fixed: Corrección de errores
+> - 🧪 Test: Nuevas pruebas o correcciones
+> - 📚 Docs: Actualizaciones de documentación
+> - 🎨 Style: Cambios de formato/estilo
+> - 🚀 Performance: Mejoras de rendimiento
+> - 🔒 Security: Correcciones de seguridad
+> - 🎉 Initial: Versión inicial
+> - 🏗️ Build: Sistema de construcción
+> - 📦 Deps: Dependencias

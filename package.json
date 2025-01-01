@@ -14,8 +14,11 @@
     "@astrojs/starlight": "^0.30.3",
     "@astrojs/starlight-docsearch": "^0.4.0",
     "@astrojs/starlight-markdoc": "^0.2.0",
+    "@playwright/test": "^1.49.1",
     "astro": "^5.0.2",
-    "astro-expressive-code": "^0.38.3",
-    "sharp": "^0.32.5"
+    "astro-diagram": "^0.7.0",
+    "mermaid": "^11.4.1",
+    "sharp": "^0.32.5",
+    "starlight-blog": "^0.16.1"
   }
 }
